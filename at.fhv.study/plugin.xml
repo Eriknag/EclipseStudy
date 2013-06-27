@@ -14,11 +14,6 @@
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            name="LoginPerspective"
-            class="at.fhv.study.login.LoginPerspective"
-            id="at.fhv.study.perspective.login">
-      </perspective>
-      <perspective
             class="at.fhv.study.main.MainPerspective"
             id="at.fhv.study.perspective.main"
             name="MainPerspective">
@@ -27,14 +22,15 @@
    <extension
          point="org.eclipse.ui.views">
       <view
-            name="Login"
-            class="at.fhv.study.login.LoginView"
-            id="at.fhv.study.view.login">
-      </view>
-      <view
       		name="Person"
             class="at.fhv.study.main.PersonView"
             id="at.fhv.study.view.person">
+      </view>
+      <view
+            class="at.fhv.study.main.CourseView"
+            id="at.fhv.study.view.course"
+            name="Courses"
+            restorable="true">
       </view>
    </extension>
    <extension

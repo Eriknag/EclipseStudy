@@ -22,6 +22,6 @@ public class ApplicationWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		configurer.setInitialSize(new Point(0,0));
 		configurer.setShowCoolBar(false);
 		configurer.setShowStatusLine(false);
-		configurer.setTitle("Tits");
+		configurer.setTitle("FHV Study app");
 	}
 }

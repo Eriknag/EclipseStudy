@@ -6,7 +6,7 @@ import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 public class ApplicationWorkbenchAdvisor extends WorkbenchAdvisor {
 
-	private static final String PERSPECTIVE_ID = "at.fhv.study.perspective.login";
+	private static final String PERSPECTIVE_ID = "at.fhv.study.perspective.main";
 
 	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(
 			IWorkbenchWindowConfigurer configurer) {

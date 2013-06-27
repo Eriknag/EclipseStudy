@@ -37,7 +37,7 @@ public class PersonView extends ViewPart {
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginWidth = 10;
 		layout.marginHeight = 15;
-		layout.verticalSpacing = 20;
+		layout.verticalSpacing = 4;
 		parent.setLayout(layout);
 		GridData layoutData = new GridData(SWT.CENTER, SWT.TOP, false, false);
 		parent.setLayoutData(layoutData);
@@ -116,21 +116,11 @@ public class PersonView extends ViewPart {
 		String password = inputPass.getText();
 		if (username.length() > 0 && password.length() > 0) {
 			if (checkLogin(username, password)) {
-				String perspectiveID = "at.fhv.study.perspective.main";
-				getSite().getWorkbenchWindow();
-				IWorkbenchWindow window = getSite()
-						.getWorkbenchWindow();
-				try {
-					window.openPage(perspectiveID, null);
-					window.close();
-				} catch (WorkbenchException ex) {
-					System.out
-							.println("ERROR! Unable to open Perspective");
-					MessageDialog.openError(parent.getShell(),
-							"Error Opening Perspective",
-							"Could not open Perspective with ID: "
-									+ perspectiveID);
-				}
+				labelUser.dispose();
+				inputUser.dispose();
+				labelPass.dispose();
+				inputPass.dispose();
+				btnLogin.dispose();
 			} else {
 				MessageDialog.openError(parent.getShell(),
 						"Wrong username or password",
