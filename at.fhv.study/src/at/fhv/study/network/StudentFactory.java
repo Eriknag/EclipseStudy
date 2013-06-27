@@ -35,8 +35,8 @@ public class StudentFactory {
 		Student student = null;
 		if (ID.equals("Erik") && password.equals("1234")) {
 			student = new Student();
-			student.setStudent_name("Nagelkerke");
-			student.setStudent_surname("Erik");
+			student.setStudent_name("Erik");
+			student.setStudent_surname("Nagelkerke");
 			student.setStudent_id("123456");
 			student.setStudent_department("Computer Science");
 			Image image = AbstractUIPlugin.imageDescriptorFromPlugin(Activator.PLUGIN_ID, "resources/test.jpg").createImage();

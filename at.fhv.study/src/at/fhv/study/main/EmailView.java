@@ -38,10 +38,5 @@ public class EmailView extends ViewPart {
 		// TODO Auto-generated method stub
 
 	}
-	
-	@Override
-	public String toString(){
-		return this.viewID;		
-	}
 
 }

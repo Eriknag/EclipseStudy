@@ -1,7 +1,9 @@
 package at.fhv.study.main;
 
-import java.util.HashMap;
+import java.net.URL;
 
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -10,27 +12,31 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageLoader;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.ISourceProviderListener;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.swt.graphics.Image;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import at.fhv.study.Activator;
 import at.fhv.study.models.Student;
 import at.fhv.study.network.StudentFactory;
 
 public class PersonView extends ViewPart {
-
-	public static final String viewID = "at.fhv.study.view.person";
 
 	private Composite prnt;
 	private Label labelUser;
@@ -131,14 +137,6 @@ public class PersonView extends ViewPart {
 			if ((student = StudentFactory.getInstance().getCurrentStudent(
 					username, password)) != null) {
 				changeToMainView();
-				HashMap<String, ISourceProviderListener> views = (HashMap) SourceProvider
-						.getInstance().getCurrentState();
-				if (views.containsKey(WelcomeView.viewID))
-					views.get(WelcomeView.viewID).sourceChanged(
-							0,
-							"student name",
-							student.getStudent_surname() + " "
-									+ student.getStudent_name());
 			} else {
 				MessageDialog
 						.openError(prnt.getShell(),
@@ -171,8 +169,8 @@ public class PersonView extends ViewPart {
 		canvas.redraw();
 
 		Label lblName = new Label(prnt, SWT.NONE);
-		lblName.setText(student.getStudent_surname() + " "
-				+ student.getStudent_name());
+		lblName.setText(student.getStudent_name() + " "
+				+ student.getStudent_surname());
 
 		Label lblID = new Label(prnt, SWT.NONE);
 		lblID.setText(student.getStudent_id());
@@ -232,11 +230,6 @@ public class PersonView extends ViewPart {
 	@Override
 	public void setFocus() {
 		inputUser.setFocus();
-	}
-
-	@Override
-	public String toString() {
-		return this.viewID;
 	}
 
 }
