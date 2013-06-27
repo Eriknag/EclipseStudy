@@ -182,7 +182,7 @@ public class PersonView extends ViewPart {
 
 		GridData listData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
 		listData.widthHint = canvas_dimension;
-		final List menu = new List(prnt, SWT.NONE);
+		final List menu = new List(prnt, SWT.SINGLE);
 		menu.setLayoutData(listData);
 		menu.setItems(new String[] { course, timetable, email, personal });
 		menu.addMouseListener(new MouseListener() {
