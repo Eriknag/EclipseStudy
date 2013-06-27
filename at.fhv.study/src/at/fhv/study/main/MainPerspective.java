@@ -11,7 +11,8 @@ public class MainPerspective implements IPerspectiveFactory {
 		layout.setEditorAreaVisible(false);
 		layout.setFixed(true);
 		
-		layout.addView("at.fhv.study.view.person", IPageLayout.LEFT, 0.20f, editorArea);	
+		layout.addView("at.fhv.study.view.person", IPageLayout.LEFT, 0.20f, editorArea);
+		System.out.println("changed.");
 	}
 
 }
