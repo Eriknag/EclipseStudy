@@ -1,9 +1,10 @@
 package at.fhv.study.models;
 
-import java.awt.Image;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import org.eclipse.swt.graphics.Image;
 
 
 public class Student {
@@ -15,7 +16,15 @@ public class Student {
 	Date student_birthdate;
 	ArrayList<String> student_hobby_list;
 	Date student_registered_date;
-	String student_id, student_name,student_surname,student_email,student_father,student_mother;
+	String student_id, student_name, student_surname, student_department, student_email,student_father,student_mother;
+	public String getStudent_department() {
+		return student_department;
+	}
+
+	public void setStudent_department(String student_department) {
+		this.student_department = student_department;
+	}
+
 	public String getStudent_id() {
 		return student_id;
 	}

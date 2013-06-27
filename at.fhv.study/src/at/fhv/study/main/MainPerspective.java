@@ -15,7 +15,7 @@ public class MainPerspective implements IPerspectiveFactory {
 		layout.addView("at.fhv.study.view.person", IPageLayout.LEFT, 0.18f, editorArea);
 		
 		IFolderLayout folder = layout.createFolder("content", IPageLayout.RIGHT, 0.82f, editorArea);
-		folder.addView("at.fhv.study.view.course");
+		folder.addView("at.fhv.study.view.welcome");
 	}
 
 }

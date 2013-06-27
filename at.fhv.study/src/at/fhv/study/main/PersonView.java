@@ -1,5 +1,9 @@
 package at.fhv.study.main;
 
+import java.net.URL;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
@@ -20,20 +24,38 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.WorkbenchException;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.swt.graphics.Image;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import at.fhv.study.Activator;
+import at.fhv.study.models.Student;
+import at.fhv.study.network.StudentFactory;
 
 public class PersonView extends ViewPart {
-	
+
+	private Composite prnt;
 	private Label labelUser;
 	private Text inputUser;
 	private Label labelPass;
 	private Text inputPass;
 	private Button btnLogin;
+	private Canvas canvas;
+	private Image canvas_image;
+	private final int canvas_dimension = 150;
+	private Student student = null;
+	private final String course = "Courses";
+	private final String timetable = "Timetable";
+	private final String email = "Email";
+	private final String personal = "Personal information";
 
 	@Override
-	public void createPartControl(final Composite parent) {
+	public void createPartControl(Composite parent) {
+		this.prnt = parent;
 		GridLayout layout = new GridLayout(1, false);
 		layout.marginWidth = 10;
 		layout.marginHeight = 15;
@@ -41,43 +63,41 @@ public class PersonView extends ViewPart {
 		parent.setLayout(layout);
 		GridData layoutData = new GridData(SWT.CENTER, SWT.TOP, false, false);
 		parent.setLayoutData(layoutData);
-		
-		
+
 		GridData imageLayout = new GridData(SWT.LEFT, SWT.TOP, false, false);
-		imageLayout.widthHint = 150;
-		imageLayout.heightHint = 150;
-		final ImageLoader loader = new ImageLoader();
-		loader.load(getClass().getResourceAsStream("YouDontSay.jpg"));
-		final Image image = new Image(parent.getDisplay(), loader.data[0]);
-		
-		Canvas canvas = new Canvas(parent,SWT.NO_REDRAW_RESIZE);
-		final Image image2 = new Image(parent.getDisplay(), image.getImageData().scaledTo(imageLayout.widthHint, imageLayout.heightHint));
+		imageLayout.widthHint = canvas_dimension;
+		imageLayout.heightHint = canvas_dimension;
+		Image image = AbstractUIPlugin.imageDescriptorFromPlugin(
+				Activator.PLUGIN_ID, "resources/default_avatar.png")
+				.createImage();
+		canvas = new Canvas(parent, SWT.NONE);
+		canvas_image = new Image(parent.getDisplay(), image.getImageData()
+				.scaledTo(canvas_dimension, canvas_dimension));
 		canvas.setLayoutData(imageLayout);
-	    canvas.addPaintListener(new PaintListener() {
+		canvas.addPaintListener(new PaintListener() {
 			@Override
 			public void paintControl(PaintEvent e) {
-				e.gc.drawImage(image2,0,0);
+				e.gc.drawImage(canvas_image, 0, 0);
 			}
-	    });
-	    
-	    labelUser = new Label(parent, SWT.NONE);
+		});
+
+		labelUser = new Label(parent, SWT.NONE);
 		labelUser.setText("Username");
 
-
-		KeyListener enterListener = new KeyListener(){
+		KeyListener enterListener = new KeyListener() {
 			@Override
-			public void keyPressed(KeyEvent e){
+			public void keyPressed(KeyEvent e) {
 			}
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				if(e.keyCode == SWT.CR || e.keyCode == SWT.LF){
-					tryLogin(parent);
+				if (e.keyCode == SWT.CR || e.keyCode == SWT.LF) {
+					tryLogin();
 				}
 			}
-			
+
 		};
-		
+
 		inputUser = new Text(parent, SWT.NONE);
 		inputUser.addKeyListener(enterListener);
 
@@ -86,7 +106,6 @@ public class PersonView extends ViewPart {
 
 		inputPass = new Text(parent, SWT.PASSWORD);
 		inputPass.addKeyListener(enterListener);
-		
 
 		btnLogin = new Button(parent, SWT.PUSH);
 		btnLogin.setText("Login");
@@ -106,59 +125,106 @@ public class PersonView extends ViewPart {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				tryLogin(parent);
+				tryLogin();
 			}
 		});
 	}
-	
-	private void tryLogin(Composite parent){
+
+	private void tryLogin() {
 		String username = inputUser.getText();
 		String password = inputPass.getText();
 		if (username.length() > 0 && password.length() > 0) {
-			if (checkLogin(username, password)) {
-				labelUser.dispose();
-				inputUser.dispose();
-				labelPass.dispose();
-				inputPass.dispose();
-				btnLogin.dispose();
+			if ((student = StudentFactory.getInstance().getCurrentStudent(
+					username, password)) != null) {
+				changeToMainView();
 			} else {
-				MessageDialog.openError(parent.getShell(),
-						"Wrong username or password",
-						"Username or password was not correct, please try again.");
+				MessageDialog
+						.openError(prnt.getShell(),
+								"Wrong username or password",
+								"Username or password was not correct, please try again.");
 			}
 		} else {
-			MessageDialog.openError(
-					parent.getShell(),
-					"Fill in username or password",
-					"Username or password was not filled in, please fill all fields in before loggin in.");
+			MessageDialog
+					.openError(
+							prnt.getShell(),
+							"Fill in username or password",
+							"Username or password was not filled in, please fill all fields in before loggin in.");
 
 		}
 	}
 
 	/**
-	 * TODO: actual check credentials
-	 * 
-	 * @return
+	 * called after login
 	 */
-	private boolean checkLogin(String user, String pass) {
-		if (user.equals("Erik") && pass.equals("1234")) {
-			return true;
+	private void changeToMainView() {
+		if (!labelUser.isDisposed()) {
+			labelUser.dispose();
+			inputUser.dispose();
+			labelPass.dispose();
+			inputPass.dispose();
+			btnLogin.dispose();
 		}
-		return false;
-	}
-	
-	private void changeToMainView(){
-		
-	}
-	
-	private void setMenu(Composite parent){
+		canvas_image = new Image(prnt.getDisplay(), student.getStudent_image()
+				.getImageData().scaledTo(canvas_dimension, canvas_dimension));
+		canvas.redraw();
+
+		Label lblName = new Label(prnt, SWT.NONE);
+		lblName.setText(student.getStudent_name() + " "
+				+ student.getStudent_surname());
+
+		Label lblID = new Label(prnt, SWT.NONE);
+		lblID.setText(student.getStudent_id());
+
+		Label lblDepartment = new Label(prnt, SWT.NONE);
+		lblDepartment.setText(student.getStudent_department());
+
 		GridData listData = new GridData(SWT.LEFT, SWT.CENTER, true, false);
-		listData.widthHint = 150;
-		List menu = new List(parent, SWT.NONE);
+		listData.widthHint = canvas_dimension;
+		final List menu = new List(prnt, SWT.NONE);
 		menu.setLayoutData(listData);
-		menu.setItems(new String[]{"Personal information", "Courses", "Grades", "TimeTables"});
-		
-		
+		menu.setItems(new String[] { course, timetable, email, personal });
+		menu.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				try {
+					openView(menu.getItem(menu.getSelectionIndex()));
+				} catch (PartInitException e1) {
+					MessageDialog.openError(prnt.getShell(), "View Error",
+							"View could not be opened, please restart the programm.");
+					e1.printStackTrace();
+				}
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+			}
+
+			@Override
+			public void mouseUp(MouseEvent e) {
+			}
+		});
+
+		prnt.layout();
+	}
+
+	private void openView(String name) throws PartInitException {
+		switch (name) {
+		case course:
+			getViewSite().getPage().showView(CourseView.viewID);
+			break;
+		case timetable:
+			getViewSite().getPage().showView(TimetableView.viewID);
+			break;
+		case email:
+			getViewSite().getPage().showView(EmailView.viewID);
+			break;
+		case personal:
+			getViewSite().getPage().showView(PersonalInformationView.viewID);
+			break;
+		default:
+			break;
+		}
 	}
 
 	@Override

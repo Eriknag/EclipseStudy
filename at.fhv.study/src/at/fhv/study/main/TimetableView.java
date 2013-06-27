@@ -10,14 +10,14 @@ import org.eclipse.ui.part.ViewPart;
  * @author inirv_000
  *
  */
-public class CourseView extends ViewPart {
+public class TimetableView extends ViewPart {
 	
-	public static final String viewID = "at.fhv.study.view.course";
+	public static final String viewID = "at.fhv.study.timetable";
 
 	/**
 	 * 
 	 */
-	public CourseView() {
+	public TimetableView() {
 		// TODO Auto-generated constructor stub
 	}
 

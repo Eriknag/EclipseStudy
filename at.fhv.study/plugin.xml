@@ -32,6 +32,30 @@
             name="Courses"
             restorable="true">
       </view>
+      <view
+            class="at.fhv.study.main.WelcomeView"
+            id="at.fhv.study.view.welcome"
+            name="Welcome"
+            restorable="true">
+      </view>
+      <view
+            class="at.fhv.study.main.PersonalInformationView"
+            id="at.fhv.study.view.personal"
+            name="Personal information"
+            restorable="true">
+      </view>
+      <view
+            class="at.fhv.study.main.EmailView"
+            id="at.fhv.study.view.email"
+            name="Email"
+            restorable="true">
+      </view>
+      <view
+            class="at.fhv.study.main.TimetableView"
+            id="at.fhv.study.timetable"
+            name="Timetable"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
