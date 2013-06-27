@@ -13,17 +13,17 @@ import at.fhv.study.models.Student;
  * @author inirv_000
  *
  */
-public class StudentFabric {
+public class StudentFactory {
 	
-	private static StudentFabric instance = null;
+	private static StudentFactory instance = null;
 	
-	private StudentFabric(){
+	private StudentFactory(){
 		
 	}
 	
-	public static StudentFabric getInstance(){
+	public static StudentFactory getInstance(){
 		if(instance == null){
-			instance = new StudentFabric();
+			instance = new StudentFactory();
 		}
 		return instance; 
 	}

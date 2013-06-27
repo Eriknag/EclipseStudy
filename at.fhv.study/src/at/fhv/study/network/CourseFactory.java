@@ -11,16 +11,16 @@ import at.fhv.study.models.Course;
  * @author inirv_000
  *
  */
-public class CourseFabric {
-	private static CourseFabric instance = null;
+public class CourseFactory {
+	private static CourseFactory instance = null;
 	
-	private CourseFabric(){
+	private CourseFactory(){
 		
 	}
 	
-	public static CourseFabric getInstance(){
+	public static CourseFactory getInstance(){
 		if(instance == null){
-			instance = new CourseFabric();
+			instance = new CourseFactory();
 		}
 		return instance;
 	}
