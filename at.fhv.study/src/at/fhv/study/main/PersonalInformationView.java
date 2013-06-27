@@ -75,7 +75,12 @@ public class PersonalInformationView extends ViewPart {
 		name.setText("Name: " + student.getStudent_surname() + " " + student.getStudent_name());
 		TableItem ID = new TableItem(table, SWT.NONE);
 		ID.setText("ID: " + student.getStudent_id());
-
+		TableItem department = new TableItem(table, SWT.NONE);
+		department.setText("Department: " + student.getStudent_department());
+		TableItem email = new TableItem(table, SWT.NONE);
+		email.setText("Email: " + student.getStudent_email());
+		TableItem birthday = new TableItem(table, SWT.NONE);
+		birthday.setText("Birthday: " + student.getStudent_birthdate());
 	}
 
 	/* (non-Javadoc)
