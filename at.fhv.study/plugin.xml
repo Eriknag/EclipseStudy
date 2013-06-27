@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="at.fhv.study.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            name="LoginPerspective"
+            class="at.fhv.study.login.LoginPerspective"
+            id="at.fhv.study.perspective.login">
+      </perspective>
+      <perspective
+            class="at.fhv.study.main.MainPerspective"
+            id="at.fhv.study.perspective.main"
+            name="MainPerspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            name="Login"
+            class="at.fhv.study.login.LoginView"
+            id="at.fhv.study.view.login">
+      </view>
+      <view
+      		name="Person"
+            class="at.fhv.study.main.PersonView"
+            id="at.fhv.study.view.person">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               label="File">
+            <command
+                  commandId="org.eclipse.ui.activeContextInfo"
+                  label="Exit">
+            </command>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+   </extension>
+
+</plugin>
