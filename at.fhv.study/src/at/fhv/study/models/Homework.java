@@ -1,14 +1,38 @@
 package at.fhv.study.models;
+import java.io.Serializable;
 
-import java.text.DateFormat;
 
-
-public class Homework {
+public class Homework implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String homework_name,homework_description,homework_teacher,homework_teacher_email;
-	DateFormat homework_deadline;
-	Course homework_course;
-	int homeworkd_grade;
+	String homework_deadline;
+	String homework_course;
+	String homework_grade;
+	
+	
+
+	public Homework(String homework_name,String homework_description,String homework_teacher,String homework_teacher_email,String homework_deadline,String homework_grade,String homework_course) {
+	
+		this.homework_name= homework_name;
+		this.homework_description=homework_description;
+		this.homework_teacher=homework_teacher;
+		this.homework_teacher_email=homework_teacher_email;
+		this.homework_deadline=homework_deadline;
+		this.homework_grade=homework_grade;
+		this.homework_course=homework_course;
+	}
+	
+	public String getHomework_grade() {
+		return homework_grade;
+	}
+
+	public void setHomework_grade(String homework_grade) {
+		this.homework_grade = homework_grade;
+	}
 	
 	public String getHomework_name() {
 		return homework_name;
@@ -42,28 +66,28 @@ public class Homework {
 		this.homework_teacher_email = homework_teacher_email;
 	}
 	
-	public DateFormat getHomework_deadline() {
+	public String getHomework_deadline() {
 		return homework_deadline;
 	}
 	
-	public void setHomework_deadline(DateFormat homework_deadline) {
+	public void setHomework_deadline(String homework_deadline) {
 		this.homework_deadline = homework_deadline;
 	}
 	
-	public Course getHomework_course() {
+	public String getHomework_course() {
 		return homework_course;
 	}
 	
-	public void setHomework_course(Course homework_course) {
+	public void setHomework_course(String homework_course) {
 		this.homework_course = homework_course;
 	}
 	
-	public int getHomeworkd_grade() {
-		return homeworkd_grade;
+	public String getHomeworkd_grade() {
+		return homework_grade;
 	}
 	
-	public void setHomeworkd_grade(int homeworkd_grade) {
-		this.homeworkd_grade = homeworkd_grade;
+	public void setHomeworkd_grade(String homeworkd_grade) {
+		this.homework_grade = homeworkd_grade;
 	}
 	
 

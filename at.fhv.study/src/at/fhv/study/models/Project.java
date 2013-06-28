@@ -1,7 +1,13 @@
 package at.fhv.study.models;
 
-public class Project {
+import java.io.Serializable;
+
+public class Project implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	String project_name,project_place,project_hours,project_description,project_time;
 
 	public String getProject_name() {
